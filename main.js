@@ -1,13 +1,13 @@
 const { token } = require('./config.json');
+const { Client, Collection } = require('discord.js');
 
-const Discord = require('discord.js');
-const client = new Discord.Client();
+const client = new Client();
 
 const prefix = '!';
 
 /* Create Discord collection of commands from files in ./commands */
 const fs = require('fs');
-client.commands = new Discord.Collection();
+client.commands = new Collection();
 const commandFiles = fs.readdirSync('./commands/').filter(file => file.endsWith('.js'));
 
 for (const file of commandFiles) {
