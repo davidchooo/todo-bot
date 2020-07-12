@@ -2,11 +2,12 @@ const { token } = require('./config.json');
 const { Client, Collection } = require('discord.js');
 
 const client = new Client();
+client.mongoose = require('./utils/mongoose');
 
 const prefix = '!';
+const fs = require('fs');
 
 /* Create Discord collection of commands from files in ./commands */
-const fs = require('fs');
 client.commands = new Collection();
 const commandFiles = fs.readdirSync('./commands/').filter(file => file.endsWith('.js'));
 
@@ -15,11 +16,14 @@ for (const file of commandFiles) {
     client.commands.set(command.name, command);
 }
 
+/* Load all models */
+const models = fs.readdirSync('./models/').filter(file => file.endsWith('.js')).forEach(filename => {
+    require(`./models/${filename}`);
+});
+
 client.once('ready', () => {
     console.log('Bot is online!');
 });
-
-client.mongoose = require('./utils/mongoose');
 
 client.on('message', message => {
     /* Ignore if message does not start with prefix or message is sent by bot*/
