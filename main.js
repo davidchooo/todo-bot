@@ -19,6 +19,8 @@ client.once('ready', () => {
     console.log('Bot is online!');
 });
 
+client.mongoose = require('./utils/mongoose');
+
 client.on('message', message => {
     /* Ignore if message does not start with prefix or message is sent by bot*/
     if (!message.content.startsWith(prefix) || message.author.bot) return;
@@ -45,4 +47,5 @@ client.on('message', message => {
 });
 
 // Login to application
+client.mongoose.init();
 client.login(token);
