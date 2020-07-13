@@ -2,8 +2,9 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const listSchema = new Schema({
+    _id: Schema.Types.ObjectId,
     name: String,
-    description: String
+    userID: String
 });
 
-mongoose.model('list', listSchema);
+module.exports = mongoose.model('list', listSchema);
